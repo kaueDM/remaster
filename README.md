@@ -8,7 +8,7 @@
 **`generateReducer(initialState, prefix)`:**
 Create a new reducer and its actions
 
-`initialState`: your reducer initial state (see Usage - step 2).
+`initialState`: your reducer initial state (see Usage).
 
 `prefix`: Your reducer's name. Used to send actions (see API - `setField`).
 
@@ -28,14 +28,14 @@ Dispatch an action to Redux. Right now, this thing dispatch one action for each 
 
 **Example with ReactJS**
 
-1. Install it:
+Install it:
 ```
   yarn add remaster
   // or
   npm install --save remaster
 ```
 
-2. Write your reducer's initial state
+Write your reducer's initial state
 ```
 // ./redux/reducers/user.js
 
@@ -48,7 +48,7 @@ const user = {
 export default user
 ```
 
-3. Combine them
+Combine them
 ```
 // ./redux/reducers/index.js
 
@@ -62,7 +62,7 @@ export default combineReducers({
 })
 ```
 
-4. Create your store
+Create your store
 ```
 // ./redux/store.js
 
@@ -75,7 +75,7 @@ const store = createStore(reducers, composeWithDevTools())
 export default store
 ```
 
-5. Wrap your app, just like regular redux
+Wrap your app, just like regular redux
 ```
 import App from './App'
 import React from 'react'
@@ -90,7 +90,7 @@ ReactDOM.render(
   , document.getElementById('root'))
 ```
 
-6. Connect your component and import `setField` from `remaster`
+Connect your component and import `setField` from `remaster`
 ```
 import React from 'react'
 import { setField } from 'remaster' // <~ do not forget this!
