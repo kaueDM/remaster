@@ -1,0 +1,26 @@
+{
+  "name": "remaster",
+  "version": "0.0.2",
+  "description": "Redux generator prototype (pls help to fix it)",
+  "main": "build/index.js",
+  "peerDependencies": {
+    "redux": "^4.0.1"
+  },
+  "dependencies": {
+    "redux": "^4.0.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "webpack --watch",
+    "build": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kaueDM/remaster"
+  },
+  "author": {
+    "name": "Kauê da Maia",
+    "email": "kaue@ruptiva.com"
+  },
+  "license": "MIT"
+}
