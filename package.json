@@ -1,6 +1,6 @@
 {
   "name": "remaster",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Redux generator prototype (pls help to fix it)",
   "main": "build/index.js",
   "peerDependencies": {
