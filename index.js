@@ -6,13 +6,19 @@ const generateActions = (initialState, prefix) => {
 
 export const generateReducer = (initialState, prefix) => {
   return (state = initialState, { type, payload }) => {
-    const actions = generateActions(initialState, prefix)
+    const actions = [...generateActions(initialState, prefix), generateType('reset', prefix)]
 
     const currentType = actions.indexOf(type) > -1 ? actions[actions.indexOf(type)] : null
 
     const field = currentType ? generateField(currentType.toLowerCase()) : ''
 
-    return currentType ? { ...state, [field]: payload || initialState[field] } : state
+    if (currentType) {
+      return currentType !== `${prefix}/RESET`
+        ? { ...state, [field]: payload || initialState[field] }
+        : { ...initialState }
+    }
+
+    return state
   }
 }
 
