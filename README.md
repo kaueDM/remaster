@@ -1,6 +1,6 @@
 ## Remaster - Redux generator prototype
 
-**[DISCLAIMER]** This is just an idea. I don't know if this is worst (probably is) than regular Redux structures. Pull requests are more than welcome.
+**[DISCLAIMER]** This is just an idea. I don't know if this is worse (probably is) than regular Redux structures. Pull requests are more than welcome.
 
 
 ### API
@@ -23,6 +23,11 @@ Dispatch an action to Redux. Right now, this thing dispatch one action for each 
 
 `payload`: Your action payload. If this value is not declared, `field` will return to it's initial value
 
+
+**`reset(prefix)`:**
+Reset the selected reducer.
+
+`prefix`: The name you defined in `generateReducer`
 
 ### Usage
 

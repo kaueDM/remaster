@@ -22,4 +22,5 @@ export const generateReducer = (initialState, prefix) => {
   }
 }
 
+export const reset = prefix => ({ type: generateType('reset', prefix) })
 export const setField = (prefix, field, payload) => ({ type: generateType(field, prefix), payload })
