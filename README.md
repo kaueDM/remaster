@@ -1,8 +1,8 @@
-## Remaster - Redux generator
+# Remaster - Redux generator
 
-### API
+## API
 
-**`remaster({ name, initialState, actions, createDefault })`:**
+###**`remaster({ name, initialState, actions, createDefault })`:**
 
 `name`: Name of your reducer.
 
@@ -12,7 +12,7 @@
 
 `createDefault`: Flag for creating the generic type/action described in `actions`. The default value is `true`.
 
-**`setField(reducerName, fieldName, newValue)`:**
+###**`setField(reducerName, fieldName, newValue)`:**
 Update a single value inside one reducer. Useful for updates where you only modify one prop
 
 `reducerName`: The name you defined in `remaster()`
@@ -26,7 +26,7 @@ Reset the selected reducer.
 
 `reducerName`: The name you defined in `remaster()`
 
-### Usage
+## Usage
 
 **Example with ReactJS**
 
