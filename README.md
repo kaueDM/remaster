@@ -1,39 +1,37 @@
-## Remaster - Redux generator prototype
-
-**[DISCLAIMER]** This is just an idea. I don't know if this is worse (probably is) than regular Redux structures. Pull requests are more than welcome.
-
+## Remaster - Redux generator
 
 ### API
 
-**`generateReducer(initialState, prefix)`:**
-Create a new reducer and its actions
+**`remaster({ name, initialState, actions, createDefault })`:**
 
-`initialState`: your reducer initial state (see Usage).
+`name`: Name of your reducer.
 
-`prefix`: Your reducer's name. Used to send actions (see API - `setField`).
+`initialState`: Initial state.
 
+`actions`: Custom actions. By default, `remaster` will create an type/action for each field inside `initialState`. If you have a field called `rimColor` inside your `car` reducer, you will get `car/SET_RIM_COLOR` type.
 
+`createDefault`: Flag for creating the generic type/action described in `actions`. The default value is `true`.
 
-**`setField(prefix, field, payload)`:**
-Dispatch an action to Redux. Right now, this thing dispatch one action for each reducer, so, if you have an idea how to fix it, send your PR.
+**`setField(reducerName, fieldName, newValue)`:**
+Update a single value inside one reducer. Useful for updates where you only modify one prop
 
-`prefix`: The name you defined in `generateReducer`
+`reducerName`: The name you defined in `remaster()`
 
-`field`: Some field from your reducer's initial state, defined in `generateReducer`
+`fieldName`: Some field from your reducer's initial state, defined in `remaster()`
 
-`payload`: Your action payload. If this value is not declared, `field` will return to it's initial value
+`newValue`: field's new value. If this value is not declared, `field` will return to it's initial value
 
-
-**`reset(prefix)`:**
+**`reset(reducerName)`:**
 Reset the selected reducer.
 
-`prefix`: The name you defined in `generateReducer`
+`reducerName`: The name you defined in `remaster()`
 
 ### Usage
 
 **Example with ReactJS**
 
 Install it:
+
 ```
   yarn add remaster
   // or
@@ -41,33 +39,47 @@ Install it:
 ```
 
 Write your reducer's initial state
+
 ```
 // ./redux/reducers/user.js
 
-const user = {
-  age: 50,
-  name: 'John',
-  favoriteFruit: 'Mango'
-}
+import remaster from "remaster";
 
-export default user
+const config = {
+  name: "user",
+  initialState: {
+    age: 50,
+    name: "John",
+    favoriteFruit: "Mango"
+  },
+  actions: {
+    setNameAndAge: (state, { name }) => ({ ...state, name, age: 123 })
+  }
+};
+
+const user = remaster(config);
+
+// using this, you can see what are your reducer action types
+export const UserTypes = user.TYPES;
+
+export default user.REDUCER;
 ```
 
 Combine them
+
 ```
 // ./redux/reducers/index.js
 
-import { combineReducers } from 'redux'
-import { generateReducer } from 'remaster'
-
-import user from './user'
+import { combineReducers } from "redux";
+import userReducer from "./userReducer";
 
 export default combineReducers({
-  user: generateReducer(user, 'user')
-})
+  user: userReducer
+});
 ```
 
 Create your store
+
 ```
 // ./redux/store.js
 
@@ -81,6 +93,7 @@ export default store
 ```
 
 Wrap your app, just like regular redux
+
 ```
 import App from './App'
 import React from 'react'
@@ -95,36 +108,49 @@ ReactDOM.render(
   , document.getElementById('root'))
 ```
 
-Connect your component and import `setField` from `remaster`
+Connect your component
+
 ```
-import React from 'react'
-import { setField } from 'remaster' // <~ do not forget this!
-import { connect } from 'react-redux'
+import React from 'react';
+import { connect } from 'react-redux';
 
 class MyComponent extends React.Component {
   render () {
-    const { user, setField } = this.props
+    const { user } = this.props
 
     return (
       <div>
         <h3>User</h3>
         <p>Name: {user.name}</p>
-
-        <button onClick={_ => setField('user', 'name', 'Martin')}>
-          Change name
-        </button>
-
-        <button onClick={_ => setField('user', 'name')}>
-          Reset name
-        </button>
       </div>
     )
   }
 }
 
-const mapStateToProps = state => ({ user: state.user })
+const mapStateToProps = ({ user }) => ({ user })
 
-export default connect(mapStateToProps, { setField })(App)
+export default connect(mapStateToProps, null)(MyComponent)
 ```
 
+To create a new action, use `mapDispatchToProps`
 
+```
+import { UserTypes } from "./userReducer";
+
+const mapDispatchToProps = dispatch => {
+  return {
+    setNameAndAge: payload =>
+      dispatch({ type: UserTypes.SET_NAME_AND_AGE, payload })
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(MyComponent);
+```
+
+To update a single field or reset a reducer, import the methods from `remaster`
+
+```
+import { setField, reset } from "remaster";
+
+export default connect(mapStateToProps, { setField, reset })(MyComponent);
+```

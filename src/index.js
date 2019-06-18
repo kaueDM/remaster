@@ -1,7 +1,7 @@
 import generateActions from "./generateActions";
 import { generateField, generateType, decamelize } from "./utils";
 
-export const remaster = config => {
+const remaster = config => {
   const { name, initialState } = config;
 
   const actions = generateActions(config);
@@ -46,3 +46,5 @@ export const setField = (name, field, payload) => ({
   type: generateType(field, name),
   payload
 });
+
+export default remaster;
