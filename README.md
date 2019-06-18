@@ -2,7 +2,7 @@
 
 ## API
 
-###**`remaster({ name, initialState, actions, createDefault })`:**
+### `remaster({ name, initialState, actions, createDefault })`
 
 `name`: Name of your reducer.
 
@@ -12,7 +12,8 @@
 
 `createDefault`: Flag for creating the generic type/action described in `actions`. The default value is `true`.
 
-###**`setField(reducerName, fieldName, newValue)`:**
+### `setField(reducerName, fieldName, newValue)`
+
 Update a single value inside one reducer. Useful for updates where you only modify one prop
 
 `reducerName`: The name you defined in `remaster()`
@@ -21,7 +22,8 @@ Update a single value inside one reducer. Useful for updates where you only modi
 
 `newValue`: field's new value. If this value is not declared, `field` will return to it's initial value
 
-**`reset(reducerName)`:**
+### `reset(reducerName)`
+
 Reset the selected reducer.
 
 `reducerName`: The name you defined in `remaster()`
